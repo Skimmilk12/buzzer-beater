@@ -2,7 +2,7 @@
 
 One-button rooftop basketball. Hold to charge, release to shoot, catch the teal band for a guaranteed swish. The shot clock is always ticking — and if the ball is in the air when the horn sounds, bank it for the **BUZZER BEATER** and play on in overtime.
 
-**▶ Play:** _(GitHub Pages link goes here once the repo is published)_
+**▶ Play: [skimmilk12.github.io/buzzer-beater](https://skimmilk12.github.io/buzzer-beater/)**
 
 ## Features
 
