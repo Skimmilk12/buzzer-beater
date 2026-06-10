@@ -242,7 +242,32 @@
   .skinCell.locked{ opacity:.4; }
   .skinCell span{ font-size:1.2cqh; color:#ffe9d699; }
 
+  /* missions */
+  #missionBox{
+    background:#1c0f38cc; border:1px solid #ff8c4233; border-radius:0.8cqw;
+    padding:1.1cqh 2cqw; text-align:left;
+  }
+  #missionHead{ font-size:1.5cqh; color:#ff8c42aa; letter-spacing:0.25cqw; margin-bottom:0.6cqh; }
+  #missionHead span{ color:var(--amber); }
+  .mission{ font-size:1.8cqh; color:var(--cream); line-height:1.8; }
+  .mission.done{ color:#2de2e6; opacity:.75; text-decoration:line-through; }
+
+  /* first-run finger hint */
+  #fingerHint{
+    position:absolute; bottom:14cqh; left:50%; transform:translateX(-50%);
+    z-index:26; text-align:center; font-size:5cqh; pointer-events:none;
+    display:none; animation:fingerPulse 1s ease-in-out infinite;
+  }
+  #fingerHint span{
+    display:block; font-size:1.8cqh; color:var(--cream);
+    text-shadow:0 0 1cqw #000; letter-spacing:0.2cqw;
+  }
+  #fingerHint.show{ display:block; }
+  @keyframes fingerPulse{ 0%,100%{ transform:translateX(-50%) scale(1); } 50%{ transform:translateX(-50%) scale(0.82); } }
+
   /* game over extras */
+  #soClose{ font-size:2cqh; color:var(--hot); letter-spacing:0.2cqw; text-shadow:0 0 1.2cqw #ff2e6355; }
+  #soClose:empty{ display:none; }
   #gradeLine{ font-size:3.2cqh; color:var(--teal); letter-spacing:0.3cqw; text-shadow:0 0 1.6cqw #2de2e655; }
   .btnRow{ display:flex; gap:1.2cqw; align-items:center; }
   #shareBtn, #menuBtn{
@@ -289,15 +314,70 @@
   }
   #copySaveBtn:hover, #importSaveBtn:hover, #closeSaveBtn:hover{ background:#321a5e; }
 
-  #rotateHint{
-    display:none; position:absolute; top:13cqh; left:50%; transform:translateX(-50%);
-    z-index:47; background:#1d1038ee; border:1px solid #ffb00055;
-    border-radius:1cqw; padding:1cqh 2cqw; color:var(--cream);
-    font-size:2cqh; pointer-events:none;
+  /* ── portrait layout overrides (one-handed phone court) ────────── */
+  #stage.portrait .cell{ min-width:17cqw; padding:0.5cqh 2cqw 0.4cqh; border-radius:1.6cqw; }
+  #stage.portrait .cell label{ font-size:0.95cqh; letter-spacing:0.4cqw; margin-bottom:0.15cqh; }
+  #stage.portrait .cell .val{ font-size:2.4cqh; }
+  #stage.portrait .cell.clockCell{ min-width:22cqw; }
+  #stage.portrait .cell.clockCell .val{ font-size:3.1cqh; }
+  #stage.portrait #hud{ top:0.9cqh; gap:1.2cqw; }
+  #stage.portrait #muteBtn, #stage.portrait #musicBtn,
+  #stage.portrait #saveBtn, #stage.portrait #fsBtn{
+    width:9cqw; height:9cqw; font-size:4cqw; top:7cqh;
   }
-  @media (orientation:portrait) and (pointer:coarse){
-    #rotateHint{ display:block; }
-    #stage.playing #rotateHint{ display:none; }
+  #stage.portrait #muteBtn{ right:2.5cqw; }
+  #stage.portrait #musicBtn{ right:14cqw; }
+  #stage.portrait #saveBtn{ right:25.5cqw; }
+  #stage.portrait #fsBtn{ right:37cqw; }
+  #stage.portrait .logo .l1, #stage.portrait .logo .l2{ font-size:5.6cqh; }
+  #stage.portrait .ballBounce{ font-size:3.6cqh; }
+  #stage.portrait .howto{ font-size:1.25cqh; line-height:1.9; max-width:88cqw; }
+  #stage.portrait .howto .k{ font-size:1.1cqh; border-radius:1cqw; padding:0.05cqh 1.6cqw; }
+  #stage.portrait .modeRow{ flex-direction:column; gap:1.2cqh; }
+  #stage.portrait .modeBtn{ font-size:1.7cqh; padding:1cqh 6cqw; border-radius:1.6cqw; }
+  #stage.portrait .modeBtn.dailyB small{ font-size:1cqh; }
+  #stage.portrait #badgeWall{ gap:2.2cqw; }
+  #stage.portrait .skinCell i{ width:2.8cqh; height:2.8cqh; }
+  #stage.portrait .skinCell span{ font-size:0.75cqh; }
+  #stage.portrait .credit{ font-size:1cqh; }
+  #stage.portrait .cta{ font-size:1.8cqh; }
+  #stage.portrait .overlay{ gap:1.6cqh; }
+  #stage.portrait .finalLabel{ font-size:1.6cqh; }
+  #stage.portrait .finalScore{ font-size:9cqh; }
+  #stage.portrait #gradeLine{ font-size:2cqh; }
+  #stage.portrait #newRecord{ font-size:1.6cqh; }
+  #stage.portrait .stat{ min-width:20cqw; padding:0.8cqh 2.4cqw; border-radius:1.6cqw; }
+  #stage.portrait .stat label{ font-size:0.85cqh; }
+  #stage.portrait .stat span{ font-size:1.9cqh; }
+  #stage.portrait #againBtn{ font-size:1.8cqh; padding:1.1cqh 5cqw; border-radius:1.6cqw; }
+  #stage.portrait #shareBtn, #stage.portrait #menuBtn{ font-size:1.4cqh; padding:1cqh 3.5cqw; border-radius:1.6cqw; }
+  #stage.portrait .pauseTxt{ font-size:3.2cqh; }
+  #stage.portrait #qBanner{ top:24cqh; }
+  #stage.portrait #qTitle{ font-size:3.4cqh; }
+  #stage.portrait #qSub{ font-size:1.3cqh; }
+  #stage.portrait #toasts{ top:13cqh; left:2.5cqw; }
+  #stage.portrait .toast{ padding:0.7cqh 2.4cqw; border-radius:1.6cqw; }
+  #stage.portrait .toast b{ font-size:1.2cqh; }
+  #stage.portrait .toast span{ font-size:0.95cqh; }
+  #stage.portrait #hint{ font-size:0.95cqh; bottom:0.8cqh; }
+  #stage.portrait #missionBox{ padding:0.8cqh 4cqw; border-radius:1.6cqw; }
+  #stage.portrait #missionHead{ font-size:1.05cqh; }
+  #stage.portrait .mission{ font-size:1.25cqh; }
+  #stage.portrait #fingerHint{ font-size:3.4cqh; bottom:16cqh; }
+  #stage.portrait #fingerHint span{ font-size:1.2cqh; }
+  #stage.portrait #soClose{ font-size:1.4cqh; }
+  #stage.portrait #saveBox{ width:84cqw; height:9cqh; font-size:1.1cqh; border-radius:1.6cqw; }
+  #stage.portrait #copySaveBtn, #stage.portrait #importSaveBtn, #stage.portrait #closeSaveBtn{
+    font-size:1.4cqh; padding:1cqh 3.5cqw; border-radius:1.6cqw;
+  }
+
+  /* keep the HUD and buttons clear of phone notches */
+  @supports (top: env(safe-area-inset-top)){
+    #hud{ top:calc(1.6cqh + env(safe-area-inset-top)); }
+    #muteBtn, #musicBtn, #saveBtn, #fsBtn{ top:calc(1.6cqh + env(safe-area-inset-top)); }
+    #stage.portrait #hud{ top:calc(0.9cqh + env(safe-area-inset-top)); }
+    #stage.portrait #muteBtn, #stage.portrait #musicBtn,
+    #stage.portrait #saveBtn, #stage.portrait #fsBtn{ top:calc(7cqh + env(safe-area-inset-top)); }
   }
 </style>
 </head>
@@ -315,7 +395,7 @@
 
   <div id="qBanner"><div id="qTitle"></div><div id="qSub"></div></div>
   <div id="toasts"></div>
-  <div id="rotateHint">↻ rotate for the full court</div>
+  <div id="fingerHint">👆<span>HOLD &amp; RELEASE</span></div>
   <button id="muteBtn" title="mute (M)">🔊</button>
   <button id="musicBtn" title="music (N)">🎵</button>
   <button id="saveBtn" title="backup save data">💾</button>
@@ -348,7 +428,12 @@
       <button class="modeBtn" id="classicBtn">CLASSIC RUN</button>
       <button class="modeBtn dailyB" id="dailyBtn">DAILY CHALLENGE<small id="dailySub"></small></button>
     </div>
+    <div id="missionBox">
+      <div id="missionHead">TODAY'S MISSIONS <span id="starCount"></span></div>
+      <div id="missionList"></div>
+    </div>
     <div id="badgeWall"></div>
+    <div class="cta" id="firstCta" style="display:none">— TAP ANYWHERE TO PLAY —</div>
     <div class="credit">rooftop edition · built for Robert · vibe-coded with Claude</div>
   </div>
 
@@ -356,6 +441,7 @@
     <div class="finalLabel" id="finalLabelEl">FINAL</div>
     <div class="finalScore" id="finalScoreEl">0</div>
     <div id="gradeLine"></div>
+    <div id="soClose"></div>
     <div id="newRecord" style="display:none">★ NEW SEASON HIGH ★</div>
     <div class="statGrid">
       <div class="stat"><label>FIELD GOALS</label><span id="stFg">0/0</span></div>
@@ -384,11 +470,35 @@
    one-button arcade basketball · single file · no assets
    ═══════════════════════════════════════════════════════════ */
 
-const W = 960, H = 540, FLOOR = 470;
 const GRAV = 1700, BALL_R = 13, RIM_R = 24;
-const LX = 152, LY = 352;            // ball launch point
-const VMIN = 650, VMAX = 1500;       // shot power range (px/s)
 const START_CLOCK = 24, MAX_CLOCK = 35;
+
+/* Two world layouts sharing one physics/logic core.
+   Landscape: the desktop rooftop. Portrait: one-handed phone court —
+   shooter low-left, hoops climb the screen, steeper arcs. */
+const LAYOUTS = {
+  land: {
+    W:960, H:540, FLOOR:470, LX:152, LY:352, SX:126,
+    hoopX:[480,830], hoopY:[200,320],
+    nearX:[490,600], nearY:[255,320], deepX:[700,830], deepY:[200,248],
+    deepD:500, minMove:90, firstHoop:[520,300], angMax:1.27,
+    VMIN:650, VMAX:1500,
+    meter:{ x:58, top:240, h:180, w:15 },
+    widthCss:'min(100vw, calc(100vh * 1.77778))', aspect:'16 / 9'
+  },
+  port: {
+    W:540, H:960, FLOOR:870, LX:84, LY:760, SX:60,
+    hoopX:[250,478], hoopY:[330,640],
+    nearX:[240,330], nearY:[520,640], deepX:[400,478], deepY:[330,430],
+    deepD:300, minMove:60, firstHoop:[300,560], angMax:1.35,
+    VMIN:520, VMAX:1560,
+    meter:{ x:30, top:470, h:200, w:14 },
+    widthCss:'min(100vw, calc(100vh * 0.5625))', aspect:'9 / 16'
+  }
+};
+let LMODE = 'land', L = LAYOUTS.land;
+let W = L.W, H = L.H, FLOOR = L.FLOOR, LX = L.LX, LY = L.LY;
+let VMIN = L.VMIN, VMAX = L.VMAX;
 
 const stage  = document.getElementById('stage');
 const cv     = document.getElementById('cv');
@@ -462,7 +572,7 @@ const AudioFX = {
     g.setTargetAtTime(0.05, t+0.45, 0.6);
   },
   beep(freq, dur, type, vol, slide){
-    if(!this.ctx) return;
+    if(!this.ctx || this.muted) return;
     const t = this.ctx.currentTime;
     const o = this.ctx.createOscillator(); o.type = type||'square';
     o.frequency.setValueAtTime(freq, t);
@@ -484,7 +594,7 @@ const AudioFX = {
     this.beep(427, 0.09, 'square', 0.06, -60);
   },
   swish(){
-    if(!this.ctx) return;
+    if(!this.ctx || this.muted) return;
     const t = this.ctx.currentTime;
     const src = this.ctx.createBufferSource(); src.buffer = this.noiseBuf;
     const bp = this.ctx.createBiquadFilter(); bp.type='bandpass'; bp.Q.value = 0.9;
@@ -497,12 +607,13 @@ const AudioFX = {
     src.connect(bp); bp.connect(g); g.connect(this.master);
     src.start(t); src.stop(t+0.4);
   },
-  jingle(mult){
+  jingle(mult, combo){
+    const lift = Math.pow(1.0595, Math.min(combo || 0, 10)) * (1 + 0.03*Math.min(mult || 1, 5));
     [523.25, 659.25, 783.99].forEach((f,i)=>
-      setTimeout(()=> this.beep(f*(1+0.05*Math.min(mult,5)), 0.12, 'square', 0.08), i*70));
+      setTimeout(()=> this.beep(f*lift, 0.12, 'square', 0.08), i*70));
   },
   buzzer(){
-    if(!this.ctx) return;
+    if(!this.ctx || this.muted) return;
     const t = this.ctx.currentTime;
     [178, 182].forEach(f=>{
       const o = this.ctx.createOscillator(); o.type='sawtooth'; o.frequency.value=f;
@@ -518,7 +629,7 @@ const AudioFX = {
   },
   tick(){ this.beep(950, 0.04, 'square', 0.05); },
   chargeStart(){
-    if(!this.ctx) return;
+    if(!this.ctx || this.muted) return;
     this.chargeStop();
     const o = this.ctx.createOscillator(); o.type='sine'; o.frequency.value=160;
     const g = this.ctx.createGain(); g.gain.value=0;
@@ -645,14 +756,36 @@ const Music = {
 try{ Music.enabled = localStorage.getItem('bbMusic') !== '0'; }catch(e){}
 
 /* ── canvas sizing ─────────────────────────────────────── */
-let scaleF = 1;
+let scaleF = 1, bgPaintedScale = 0;
 function resize(){
   const dpr = Math.min(2, window.devicePixelRatio || 1);
   const cw = stage.clientWidth, ch = stage.clientHeight;
   cv.width = Math.round(cw*dpr); cv.height = Math.round(ch*dpr);
   scaleF = cv.width / W;
+  if(bgPaintedScale > 0 && Math.abs(scaleF - bgPaintedScale) > 0.1) paintBackdrop();
 }
-window.addEventListener('resize', resize);
+function pickLayoutMode(){ return window.innerHeight > window.innerWidth ? 'port' : 'land'; }
+function applyLayout(mode){
+  LMODE = mode; L = LAYOUTS[mode];
+  W = L.W; H = L.H; FLOOR = L.FLOOR; LX = L.LX; LY = L.LY;
+  VMIN = L.VMIN; VMAX = L.VMAX;
+  stage.style.width = L.widthCss;
+  stage.style.aspectRatio = L.aspect;
+  stage.classList.toggle('portrait', mode === 'port');
+  vCacheMap = {};
+  resize();          // scaleF first, so the backdrop paints at the right resolution
+  paintBackdrop();
+}
+window.addEventListener('resize', () => {
+  resize();
+  const m = pickLayoutMode();
+  if(m !== LMODE && state !== 'play' && state !== 'pause'){
+    applyLayout(m);
+    hoop.x = hoop.tx = L.firstHoop[0]; hoop.ry = hoop.try = L.firstHoop[1];
+    hoop2 = null; fadingHoops.length = 0;
+    newBall();
+  }
+});
 resize();
 
 /* ── backdrop (rendered once, offscreen) ───────────────── */
@@ -665,9 +798,13 @@ function mulberry32(seed){
   };
 }
 const bgCv = document.createElement('canvas');
-bgCv.width = W; bgCv.height = H;
 function paintBackdrop(){
+  // paint at device resolution so the backdrop stays crisp on hi-DPI screens
+  const s = scaleF || 1;
+  bgPaintedScale = s;
+  bgCv.width = Math.round(W*s); bgCv.height = Math.round(H*s);
   const b = bgCv.getContext('2d');
+  b.setTransform(s, 0, 0, s, 0, 0);
   const R = mulberry32(7);
   // dusk sky
   const sky = b.createLinearGradient(0,0,0,FLOOR);
@@ -677,34 +814,35 @@ function paintBackdrop(){
   // stars
   b.fillStyle = '#ffe9d6';
   for(let i=0;i<70;i++){
-    const x = R()*W, y = R()*200, a = 0.15 + R()*0.5;
+    const x = R()*W, y = R()*(FLOOR*0.42), a = 0.15 + R()*0.5;
     b.globalAlpha = a; b.fillRect(x, y, R()<0.2?2:1, R()<0.2?2:1);
   }
   b.globalAlpha = 1;
   // sun, low and huge
-  const sg = b.createRadialGradient(300,408,10, 300,408,180);
+  const sunX = W*0.31, sunY = FLOOR-62;
+  const sg = b.createRadialGradient(sunX,sunY,10, sunX,sunY,180);
   sg.addColorStop(0,'rgba(255,170,80,0.9)'); sg.addColorStop(0.25,'rgba(255,120,60,0.45)');
   sg.addColorStop(1,'rgba(255,120,60,0)');
-  b.fillStyle = sg; b.fillRect(100,230,420,260);
+  b.fillStyle = sg; b.fillRect(sunX-200,sunY-180,400,240);
   b.fillStyle = '#ffb15e';
-  b.beginPath(); b.arc(300,408,52,0,Math.PI*2); b.fill();
+  b.beginPath(); b.arc(sunX,sunY,52,0,Math.PI*2); b.fill();
   // skyline — far layer
   b.fillStyle = '#341347';
   let x = -10;
   while(x < W){
     const w = 40+R()*70, h = 60+R()*120;
-    b.fillRect(x, 460-h, w, h+10);
+    b.fillRect(x, FLOOR-10-h, w, h+10);
     x += w + R()*14;
   }
   // skyline — near layer + lit windows
   x = -20;
   while(x < W){
-    const w = 55+R()*90, h = 30+R()*85, top = 462-h;
+    const w = 55+R()*90, h = 30+R()*85, top = FLOOR-8-h;
     b.fillStyle = '#241040';
     b.fillRect(x, top, w, h+8);
     if(R()<0.4){ b.fillRect(x+w*0.3, top-12, 4, 12); } // antenna
     b.fillStyle = '#ffb866';
-    for(let wy=top+8; wy<458; wy+=12){
+    for(let wy=top+8; wy<FLOOR-12; wy+=12){
       for(let wx=x+6; wx<x+w-6; wx+=11){
         if(R()<0.18){ b.globalAlpha = 0.4+R()*0.5; b.fillRect(wx,wy,4,5); }
       }
@@ -720,17 +858,19 @@ function paintBackdrop(){
   b.beginPath(); b.moveTo(0,FLOOR+1.5); b.lineTo(W,FLOOR+1.5); b.stroke();
   // painted court markings
   b.globalAlpha = 0.18; b.strokeStyle = '#ffe9d6'; b.lineWidth = 2;
-  b.beginPath(); b.ellipse(480, FLOOR+34, 120, 22, 0, 0, Math.PI*2); b.stroke();
-  b.beginPath(); b.ellipse(120, FLOOR+30, 150, 26, 0, -0.4, Math.PI+0.4); b.stroke();
+  b.beginPath(); b.ellipse(W/2, FLOOR+34, W*0.125, 22, 0, 0, Math.PI*2); b.stroke();
+  b.beginPath(); b.ellipse(L.SX, FLOOR+30, W*0.156, 26, 0, -0.4, Math.PI+0.4); b.stroke();
   b.globalAlpha = 0.13; b.fillStyle = '#ffe9d6';
-  b.font = '22px Bungee, "Arial Black", sans-serif'; b.textAlign = 'center';
-  b.fillText("ROBERT'S ROOFTOP", 480, FLOOR+42);
+  b.font = (LMODE==='port' ? '16px' : '22px') + ' Bungee, "Arial Black", sans-serif';
+  b.textAlign = 'center';
+  b.fillText("ROBERT'S ROOFTOP", W/2, FLOOR+42);
   // painted three-point marker (hoops past this are worth 3)
+  const tpx = LX + L.deepD;
   b.globalAlpha = 0.3; b.strokeStyle = '#ffd23f'; b.lineWidth = 2;
-  b.beginPath(); b.moveTo(652, FLOOR+4); b.lineTo(636, FLOOR+64); b.stroke();
+  b.beginPath(); b.moveTo(tpx, FLOOR+4); b.lineTo(tpx-16, FLOOR+64); b.stroke();
   b.fillStyle = '#ffd23f'; b.globalAlpha = 0.32;
   b.font = '12px Bungee, "Arial Black", sans-serif';
-  b.fillText('3PT →', 610, FLOOR+34);
+  b.fillText('3PT →', tpx-42, FLOOR+34);
   b.globalAlpha = 1;
 }
 paintBackdrop();
@@ -742,6 +882,7 @@ let state = 'title';            // title | play | pause | over
 let mode = 'classic';           // classic | daily
 let score = 0, clock = START_CLOCK, streak = 0;
 let attempts = 0, makes = 0, swishes = 0, bbCount = 0, bestStreak = 0, banks = 0;
+let threes = 0, goldens = 0, swishStreak = 0, pbCrossed = false, rattleT = 0;
 let best = 0, bestDaily = 0;
 try{
   best = parseInt(localStorage.getItem('buzzerBeaterHigh')) || 0;
@@ -754,7 +895,10 @@ function syncBestDaily(){
   const k = dailyKey();
   if(k !== bestDailyDay){
     bestDailyDay = k;
-    try{ bestDaily = parseInt(localStorage.getItem('bbDaily-' + k)) || 0; }catch(e){ bestDaily = 0; }
+    try{
+      bestDaily = parseInt(localStorage.getItem('bbDaily-' + k)) || 0;
+      missionsDone = new Set(JSON.parse(localStorage.getItem('bbMissions-' + k) || '[]'));
+    }catch(e){ bestDaily = 0; missionsDone = new Set(); }
   }
 }
 
@@ -804,6 +948,88 @@ try{
   skin = localStorage.getItem('bbSkin') || 'default';
 }catch(e){}
 if(skin !== 'default' && !unlocked.has(skin)) skin = 'default';
+
+/* first-visit onboarding: straight into a gentle first run, no reading */
+let firstVisit = true;
+try{ firstVisit = !localStorage.getItem('bbPlayed'); }catch(e){}
+
+/* daily streak (Duolingo model: one auto shield per week) */
+let dailyStreak = { count:0, last:'', shieldWeek:'' };
+try{ dailyStreak = JSON.parse(localStorage.getItem('bbStreak') || '{"count":0,"last":"","shieldWeek":""}'); }catch(e){}
+function dayKeyOffset(off){
+  const d = new Date(); d.setDate(d.getDate() + off);
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function weekKey(){
+  const d = new Date(), j = new Date(d.getFullYear(), 0, 1);
+  return d.getFullYear() + '-' + Math.ceil((((d - j) / 86400000) + j.getDay() + 1) / 7);
+}
+function bumpDailyStreak(day){
+  const today = day || dailyKey();
+  if(dailyStreak.last === today) return;
+  if(dailyStreak.last === dayKeyOffset(-1) || dailyStreak.count === 0){
+    dailyStreak.count = dailyStreak.last === dayKeyOffset(-1) ? dailyStreak.count + 1 : 1;
+  } else if(dailyStreak.last === dayKeyOffset(-2) && dailyStreak.shieldWeek !== weekKey()){
+    dailyStreak.shieldWeek = weekKey();
+    dailyStreak.count++;
+    addToast('🛡 STREAK SHIELD', 'missed day covered — one per week');
+  } else {
+    dailyStreak.count = 1;
+  }
+  dailyStreak.last = today;
+  try{ localStorage.setItem('bbStreak', JSON.stringify(dailyStreak)); }catch(e){}
+  if(dailyStreak.count > 1) addToast('🔥 ' + dailyStreak.count + '-DAY STREAK', 'come back tomorrow');
+}
+
+/* three rotating daily missions — same three for every player on Earth */
+const MISSION_POOL = [
+  { id:'swish6',  txt:'Swish 6 in one run',        check: s => s.swishes >= 6 },
+  { id:'bank2',   txt:'Bank 2 shots in one run',   check: s => s.banks >= 2 },
+  { id:'bb1',     txt:'Hit a buzzer beater',       check: s => s.bbCount >= 1 },
+  { id:'score80', txt:'Score 80 in a run',         check: s => s.score >= 80 },
+  { id:'streak6', txt:'Run a 6 streak',            check: s => s.bestStreak >= 6 },
+  { id:'three4',  txt:'Make 4 threes in one run',  check: s => s.threes >= 4 },
+  { id:'q3',      txt:'Reach the 3rd quarter',     check: s => s.quarter >= 3 },
+  { id:'gold1',   txt:'Cash a golden hoop',        check: s => s.goldens >= 1 },
+];
+function todaysMissions(day){
+  const r = mulberry32(hashSeed('missions-' + (day || dailyKey())));
+  const pool = MISSION_POOL.slice(), out = [];
+  for(let i=0;i<3;i++) out.push(pool.splice((r()*pool.length)|0, 1)[0]);
+  return out;
+}
+let missionsDone = new Set(), stars = 0;
+try{
+  missionsDone = new Set(JSON.parse(localStorage.getItem('bbMissions-' + dailyKey()) || '[]'));
+  stars = parseInt(localStorage.getItem('bbStars')) || 0;
+}catch(e){}
+function checkMissions(day){
+  const k = day || dailyKey();
+  const s = { swishes, banks, bbCount, score, bestStreak, threes, goldens, quarter };
+  for(const m of todaysMissions(k)){
+    if(!missionsDone.has(m.id) && m.check(s)){
+      missionsDone.add(m.id);
+      stars++;
+      try{
+        localStorage.setItem('bbMissions-' + k, JSON.stringify([...missionsDone]));
+        localStorage.setItem('bbStars', String(stars));
+      }catch(e){}
+      addToast('⭐ MISSION — ' + m.txt, 'career stars: ' + stars);
+    }
+  }
+  renderMissions();
+}
+function renderMissions(){
+  const el = $('missionList');
+  el.innerHTML = '';
+  for(const m of todaysMissions()){
+    const row = document.createElement('div');
+    row.className = 'mission' + (missionsDone.has(m.id) ? ' done' : '');
+    row.textContent = (missionsDone.has(m.id) ? '✓ ' : '○ ') + m.txt;
+    el.appendChild(row);
+  }
+  $('starCount').textContent = stars > 0 ? '⭐ ' + stars : '';
+}
 
 function award(id){
   if(unlocked.has(id)) return;
@@ -872,31 +1098,40 @@ let ball = null;
 const deadBalls = [], particles = [], popups = [];
 
 function newBall(){
-  ball = { x:LX, y:372, vx:0, vy:0, held:true, scored:false, touched:false, board:false,
+  ball = { x:LX, y:LY+20, vx:0, vy:0, held:true, scored:false, touched:false, board:false,
            rot:0, air:0, trail:[], alpha:1, bounces:0, deadT:0, emitAcc:0, tgt:null, wax:0,
-           snapped:false };
+           snapped:false, nearMiss:false };
 }
 newBall();
 
 function moveHoop(){
-  let nx;
-  do { nx = randG(480, 830); } while(Math.abs(nx - hoop.tx) < 90);
+  // exactly six rng draws per possession, mapped through the layout —
+  // the daily stays deterministic on every device and orientation
+  const u1 = rng(), u2 = rng(), u3 = rng(), u4 = rng(), u5 = rng(), u6 = rng();
+  const span = L.hoopX[1] - L.hoopX[0];
+  let nx = L.hoopX[0] + u1*span;
+  let guard = 0;
+  while(Math.abs(nx - hoop.tx) < L.minMove && guard++ < 5){
+    nx = L.hoopX[0] + ((nx - L.hoopX[0] + span*0.37) % span);
+  }
   hoop.tx = nx;
-  hoop.try = randG(200, 320);
+  hoop.try = L.hoopY[0] + u2*(L.hoopY[1]-L.hoopY[0]);
   if(hoop2){
     if(hoop2.alpha === undefined) hoop2.alpha = 1;
     fadingHoops.push(hoop2);
     if(fadingHoops.length > 3) fadingHoops.shift();
   }
   hoop2 = null;
-  if(quarter >= 2 && rng() < 0.35){
+  if(quarter >= 2 && u3 < 0.35){
     // twin possession: near safe 2 + deep 3, separated so both arcs are clean
-    hoop.tx = randG(490, 600); hoop.try = randG(255, 320);
-    hoop2 = { tx: randG(700, 830), try: randG(200, 248), alpha: 0 };
+    hoop.tx = L.nearX[0] + u1*(L.nearX[1]-L.nearX[0]);
+    hoop.try = L.nearY[0] + u2*(L.nearY[1]-L.nearY[0]);
+    hoop2 = { tx: L.deepX[0] + u4*(L.deepX[1]-L.deepX[0]),
+              try: L.deepY[0] + u5*(L.deepY[1]-L.deepY[0]), alpha: 0 };
     hoop2.x = hoop2.tx; hoop2.ry = hoop2.try;
-    popup('PICK YOUR SHOT', W/2, 150, '#ffe9d6', 22);
+    popup('PICK YOUR SHOT', W/2, H*0.28, '#ffe9d6', 22);
   }
-  wind = activeMods.includes('WIND') ? (rng()<0.5?-1:1)*randG(45,115) : 0;
+  wind = activeMods.includes('WIND') ? (u6 < 0.5 ? -1 : 1)*(45 + ((u6*7) % 1)*70) : 0;
   goldenHoop = !hoop2 && streak > 0 && streak % 4 === 0;   // heat check: every 4th straight make
   if(goldenHoop) popup('HEAT CHECK!', hoop.tx, hoop.try-70, '#ffd23f', 30);
 }
@@ -904,7 +1139,18 @@ function moveHoop(){
 /* shot math: angle adapts to the look, power is the player's job.
    Aim uses the hoop's destination (tx/try) so shots released while the
    hoop is still sliding land where it settles. */
-function shotAngle(d, h){ return clamp(0.96 + (h/d)*0.55, 1.03, 1.27); }
+function shotAngle(d, h){
+  if(h/d > 1.2){
+    // hoop nearly overhead (portrait): a capped angle would graze the rim at
+    // apex, so construct the arc from a guaranteed 100px apex clearance —
+    // rise to h+M, drift d horizontally, drop M into the center
+    const M = 100;
+    const vy0 = Math.sqrt(2*GRAV*(Math.max(h, 0) + M));
+    const tFlight = vy0/GRAV + Math.sqrt(2*M/GRAV);
+    return Math.atan2(vy0, d/tFlight);
+  }
+  return clamp(0.96 + (h/d)*0.55, 1.03, L.angMax);
+}
 /* numeric solve (with wind) for the speed that drops the ball dead-center.
    Simulated with the same integrator as the live ball, so the band promise
    holds under every modifier. Cached per (hoop, wind). */
@@ -970,13 +1216,19 @@ function ring(x, y, color){
   particles.push({ x, y, vx:0, vy:0, g:0, life:0, max:0.45, size:6, color, shape:'ring', rot:0, vr:0 });
 }
 function popup(text, x, y, color, size){
-  popups.push({ text, x, y, color, size:size||30, t:0, life:1.1 });
+  size = size || 30;
+  // clamp inside the canvas so hoop-anchored popups never clip at the edges
+  ctx.font = size + 'px Bungee, "Arial Black", sans-serif';
+  const hw = ctx.measureText(text).width/2 + 8;
+  popups.push({ text, x: clamp(x, hw, W-hw), y, color, size, t:0, life:1.1 });
 }
 function shake(mag){ shakeMag = Math.max(shakeMag, mag); shakeT = 0.35; }
 
 /* ── core flow ─────────────────────────────────────────── */
 function startGame(m){
   if(m) mode = m;
+  const lm = pickLayoutMode();
+  if(lm !== LMODE) applyLayout(lm);
   syncBestDaily();
   runDailyKey = dailyKey();
   rng = mulberry32(mode === 'daily' ? hashSeed('bb-' + runDailyKey) : (Math.random()*2**31)|0);
@@ -984,6 +1236,7 @@ function startGame(m){
   quarter = 1; activeMods = []; wind = 0; hoop2 = null; goldenHoop = false;
   fadingHoops.length = 0;
   attemptsSinceBanner = 99; banks = 0; vCacheMap = {};
+  threes = 0; goldens = 0; swishStreak = 0; pbCrossed = false; rattleT = 0;
   bestEl.textContent = mode === 'daily' ? bestDaily : best;
   $('bestLabel').textContent = mode === 'daily' ? 'TODAY' : 'BEST';
   score = 0; clock = START_CLOCK; streak = 0;
@@ -992,7 +1245,7 @@ function startGame(m){
   timeScale = 1; slowmoTarget = 1; freezeT = 0;
   charging = false; chargeT = 0; chargeP = 0; chargeSrc = null;
   deadBalls.length = 0; particles.length = 0; popups.length = 0;
-  hoop.x = hoop.tx = 560; hoop.ry = hoop.try = 250;
+  hoop.x = hoop.tx = L.firstHoop[0]; hoop.ry = hoop.try = L.firstHoop[1];
   newBall();
   state = 'play';
   stage.classList.remove('fire','urgent');
@@ -1012,10 +1265,16 @@ function gradeFor(s){
 
 function shareText(){
   const [g, name] = gradeFor(score);
+  // spoiler-free run story, Wordle-style: quarters survived, fire, sirens
+  const qReached = Math.max(1, Math.floor(makes/6) + 1);
+  const story = '🟧'.repeat(Math.min(qReached - 1, 8)) + '🟥 Q' + qReached
+    + (bestStreak >= 3 ? ' · 🔥' + bestStreak : '')
+    + (bbCount > 0 ? ' · ' + '🚨'.repeat(Math.min(bbCount, 5)) : '');
   const lines = [
     '🏀 BUZZER BEATER — ' + (mode==='daily' ? 'Daily ' + dailyLabel() : 'Classic'),
     score + ' PTS · ' + g + '-grade ' + name,
-    makes + '/' + attempts + ' FG · ' + swishes + ' swishes · ' + bbCount + ' buzzer-beater' + (bbCount===1?'':'s') + (bbCount>0?' 🚨':''),
+    story,
+    makes + '/' + attempts + ' FG · ' + swishes + ' swishes',
     'beat that.'
   ];
   if(SHARE_URL) lines.push(SHARE_URL);
@@ -1025,11 +1284,20 @@ function shareText(){
 function endGame(){
   state = 'over';
   overAt = performance.now();
+  window.dispatchEvent(new Event('resize'));   // settle any mid-run orientation change now
   charging = false;
   AudioFX.chargeStop();
   AudioFX.crowdBase(0.02);
   stage.classList.remove('fire','urgent');
   checkBadges(true);
+  checkMissions(runDailyKey);
+  if(mode === 'daily') bumpDailyStreak(runDailyKey);
+  if(firstVisit){
+    firstVisit = false;
+    try{ localStorage.setItem('bbPlayed', '1'); }catch(e){}
+    $('firstCta').style.display = 'none';
+  }
+  const chasing = mode === 'daily' ? bestDaily : best;
   let isRecord;
   if(mode === 'daily'){
     isRecord = score > bestDaily;
@@ -1046,7 +1314,20 @@ function endGame(){
       bestEl.textContent = best;
     }
   }
-  if(isRecord) AudioFX.swell(0.22);
+  if(isRecord && score > 0){
+    // the one reserved over-the-top celebration: new personal best only
+    spawnParts(110, W/2, H*0.4, { colors:['#ffb000','#ff2e63','#2de2e6','#ffe9d6','#ffd23f'],
+      shape:'rect', spMin:120, spMax:420, vy:-200, g:700, lifeMin:1.1, lifeMax:2.2, szMin:3, szMax:8 });
+    shake(12);
+    AudioFX.swell(0.3);
+    AudioFX.jingle(5, 8);
+    setTimeout(() => { if(AudioFX.ctx) AudioFX.jingle(5, 12); }, 260);
+  }
+  const gap = chasing - score;
+  $('soClose').textContent =
+      (!isRecord && gap === 0 && chasing > 0) ? 'TIED YOUR BEST'
+    : (!isRecord && gap > 0 && gap <= 15) ? 'SO CLOSE — ' + gap + ' OFF YOUR BEST'
+    : '';
   const [g, name] = gradeFor(score);
   $('gradeLine').textContent = g + ' · ' + name;
   $('finalLabelEl').textContent = mode === 'daily' ? 'DAILY — ' + dailyLabel() : 'FINAL';
@@ -1057,7 +1338,12 @@ function endGame(){
   $('stSw').textContent = swishes;
   $('stRun').textContent = bestStreak;
   $('stBb').textContent = bbCount;
-  $('overOverlay').classList.remove('hidden');
+  if(isRecord && score > 0){
+    // let the confetti play in the clear before the stats panel covers it
+    setTimeout(() => { if(state === 'over') $('overOverlay').classList.remove('hidden'); }, 650);
+  } else {
+    $('overOverlay').classList.remove('hidden');
+  }
 }
 
 function shoot(){
@@ -1069,9 +1355,13 @@ function shoot(){
   // so the score-based band shrink is the real difficulty curve. Snapped
   // balls also bypass rim collision on the way in — the promise is
   // mechanical, immune to wind/modifier solver error.
-  const inBand = Math.abs(chargeP - perfectP(tg)) <= bandTol();
+  const offBand = Math.abs(chargeP - perfectP(tg));
+  const inBand = offBand <= bandTol();
   if(inBand) v = requiredV(tg);
   ball.snapped = inBand;
+  // just-missed-the-band shots get extra rim drama: loud clanks, rattle-outs,
+  // the honest near-miss that fuels "one more run"
+  ball.nearMiss = !inBand && offBand <= bandTol()*2.4;
   const d = tgtX(tg) - LX, h = LY - tgtY(tg) + 4;
   const th = shotAngle(Math.max(60,d), h);
   ball.held = false;
@@ -1098,8 +1388,9 @@ function resolveShot(made, swish, bank, tg){
     streak++;
     bestStreak = Math.max(bestStreak, streak);
     makes++; if(swish) swishes++; if(bank) banks++;
+    swishStreak = swish ? swishStreak + 1 : 0;
     const mult = multFor(streak);
-    const deep = tgtX(tg) - LX > 500;       // beyond the painted line: it's a three
+    const deep = tgtX(tg) - LX > L.deepD;   // beyond the painted line: it's a three
     const wasGolden = goldenHoop;
     let pts = ((deep?3:2) + (swish?1:0) + (bank?1:0)) * mult;
     let tBonus = (swish?5:4) + (streak>=3?1:0) + (wasGolden?2:0);
@@ -1108,17 +1399,25 @@ function resolveShot(made, swish, bank, tg){
       wasBB = true; bbCount++;
       pts *= 3; tBonus = 12;
       freezeT = 0.14;
-      popup('BUZZER BEATER!', W/2, 200, '#ff2e63', 52);
-      popup('OVERTIME +12s', W/2, 252, '#2de2e6', 26);
+      popup('BUZZER BEATER!', W/2, H*0.37, '#ff2e63', 52);
+      popup('OVERTIME +12s', W/2, H*0.37+52, '#2de2e6', 26);
       spawnParts(60, hx, hy, { colors:['#ffb000','#ff2e63','#2de2e6','#ffe9d6','#ff8c42'],
         shape:'rect', spMin:80, spMax:340, vy:-160, g:760, lifeMin:0.9, lifeMax:1.7, szMin:3, szMax:7 });
       shake(16);
       AudioFX.swell(0.26);
     }
-    if(wasGolden) pts *= 2;
+    if(wasGolden){ pts *= 2; goldens++; }
+    if(deep) threes++;
     score += pts;
     clock = Math.min(MAX_CLOCK, clock + tBonus);
     hornDone = false;   // time is back on the clock — re-arm the horn
+    // crossing your own record mid-run is a moment — mark it once
+    const chasing = mode === 'daily' ? bestDaily : best;
+    if(!pbCrossed && chasing > 0 && score > chasing){
+      pbCrossed = true;
+      popup('NEW BEST — KEEP GOING', W/2, H*0.25, '#ffd23f', 26);
+      AudioFX.swell(0.18);
+    }
     popup('+'+pts, hx, hy-46, wasGolden ? '#ffd23f' : '#ffb000', 34);
     if(!wasBB) popup('+'+tBonus+'s', hx+56, hy-14, '#2de2e6', 17);
     const tags = [];
@@ -1128,7 +1427,7 @@ function resolveShot(made, swish, bank, tg){
     if(wasGolden) tags.push('GOLDEN ×2');
     if(tags.length && !wasBB) popup(tags.join(' · '), hx, hy-88, swish ? '#2de2e6' : '#ffe9d6', 22);
     if(CALLOUTS[streak]){
-      popup(CALLOUTS[streak], W/2, 170, streak>=5 ? '#ff2e63' : '#ff8c42', 40);
+      popup(CALLOUTS[streak], W/2, H*0.315, streak>=5 ? '#ff2e63' : '#ff8c42', 40);
       AudioFX.swell(0.12 + Math.min(streak,10)*0.015);
     }
     if(streak===3) stage.classList.add('fire');
@@ -1140,7 +1439,7 @@ function resolveShot(made, swish, bank, tg){
     netSway = 1;
     shake(swish?5:3);
     if(swish) AudioFX.swish();
-    AudioFX.jingle(mult);
+    AudioFX.jingle(mult, swishStreak);   // Dunk Shot's ladder: each straight swish rings higher
     AudioFX.swell(0.05 + mult*0.025);
     checkBadges(false);
     const nq = Math.floor(makes/6) + 1;
@@ -1150,12 +1449,13 @@ function resolveShot(made, swish, bank, tg){
     newBall();
   } else {
     streak = 0;
+    swishStreak = 0;
     stage.classList.remove('fire');
     const ending = bbAttempt || clock <= 0;
     bbAttempt = false; slowmoTarget = 1;
     newBall();
     if(ending){
-      popup('NO GOOD', W/2, 200, '#ffe9d6', 36);
+      popup('NO GOOD', W/2, H*0.37, '#ffe9d6', 36);
       endGame();
     }
   }
@@ -1199,7 +1499,7 @@ function onBuzzer(){
   if(ball && !ball.held){
     bbAttempt = true;
     slowmoTarget = 0.38;
-    popup('FOR THE WIN…', W/2, 170, '#ffe9d6', 26);
+    popup('FOR THE WIN…', W/2, H*0.315, '#ffe9d6', 26);
   } else {
     endGame();
   }
@@ -1213,7 +1513,8 @@ function stepBallPhysics(b, dt, isLive){
   const hx = tg.x, hy = tg.ry;
   const bx = hx + RIM_R + 7;            // backboard front face
   const doubleRim = activeMods.includes('DOUBLE_RIM');
-  const lip = (doubleRim ? 4.6 : 3.5) - (isLive && streak >= 3 ? 0.8 : 0); // ON FIRE forgives a little
+  const lip = (doubleRim ? 4.6 : 3.5) - (isLive && streak >= 3 ? 0.8 : 0)
+            + (isLive && b.nearMiss ? 1.3 : 0);  // near-band misses catch iron, not air
   const rest = doubleRim ? 1.78 : 1.55, damp = doubleRim ? 0.97 : 0.92;
   for(let i=0;i<steps;i++){
     const px = b.x, py = b.y;
@@ -1244,8 +1545,9 @@ function stepBallPhysics(b, dt, isLive){
             b.vx -= rest*vn*nx; b.vy -= rest*vn*ny;
             b.vx *= damp; b.vy *= damp;
             b.touched = true;
-            AudioFX.clank(); shake(2.5);
-            spawnParts(4, rpx, hy, { colors:['#ffe9d6'], spMin:20, spMax:110, g:500, lifeMin:0.15, lifeMax:0.35, szMin:1, szMax:2.5 });
+            AudioFX.clank(); shake(b.nearMiss ? 5 : 2.5);
+            if(b.nearMiss) rattleT = 0.32;   // slow-mo beat on the agonizing rattle
+            spawnParts(b.nearMiss ? 9 : 4, rpx, hy, { colors:['#ffe9d6'], spMin:20, spMax:110, g:500, lifeMin:0.15, lifeMax:0.35, szMin:1, szMax:2.5 });
           }
         }
       }
@@ -1277,7 +1579,9 @@ function stepBallPhysics(b, dt, isLive){
 /* ── update ────────────────────────────────────────────── */
 function tickGame(dt){
   if(freezeT > 0){ freezeT -= dt; return; }
-  timeScale += (slowmoTarget - timeScale)*Math.min(1, dt*8);
+  if(rattleT > 0) rattleT -= dt;
+  const effSlow = rattleT > 0 ? Math.min(slowmoTarget, 0.55) : slowmoTarget;
+  timeScale += (effSlow - timeScale)*Math.min(1, dt*8);
   const gdt = dt*timeScale;
   netT += gdt*16;
   netSway *= Math.max(0, 1 - 3*gdt);
@@ -1462,7 +1766,7 @@ function drawHoopAt(hx, hy, opts){
 function drawHoops(){
   const flying = ball && !ball.held;
   drawHoopAt(hoop.x, hoop.ry, {
-    deep: hoop.tx - LX > 500, golden: goldenHoop, flag: true,
+    deep: hoop.tx - LX > L.deepD, golden: goldenHoop, flag: true,
     ghost: flying && ball.tgt && ball.tgt !== hoop
   });
   if(hoop2) drawHoopAt(hoop2.x, hoop2.ry, {
@@ -1476,7 +1780,7 @@ function drawShooter(){
   const jump = jumpT > 0 ? Math.sin((1 - jumpT/0.45)*Math.PI)*24 : 0;
   const fy = FLOOR - jump;
   const hipY = fy-46+crouch, headY = fy-78+crouch;
-  const sx = 126;
+  const sx = L.SX;
   ctx.strokeStyle = '#1b0f3a'; ctx.fillStyle = '#1b0f3a';
   ctx.lineCap = 'round'; ctx.lineWidth = 7.5;
   // legs
@@ -1503,7 +1807,7 @@ function drawShooter(){
 
 function drawMeter(){
   if(state !== 'play') return;
-  const mx = 58, mTop = 240, mH = 180, mW = 15;
+  const mx = L.meter.x, mTop = L.meter.top, mH = L.meter.h, mW = L.meter.w;
   const tol = bandTol();
   ctx.fillStyle = 'rgba(18,9,40,0.82)';
   ctx.beginPath(); ctx.roundRect(mx-3, mTop-3, mW+6, mH+6, 7); ctx.fill();
@@ -1565,7 +1869,7 @@ function drawTrajectoryPreview(){
   ctx.fillStyle = 'rgba(255,233,214,0.4)';
   // small steps so the preview matches the live ball's substepped flight
   const sdt = 0.005;
-  for(let i=0;i<288;i++){
+  for(let i=0;i<560;i++){
     vy += GRAV*sdt; vx += wind*sdt; x += vx*sdt; y += vy*sdt;
     if(y > FLOOR) break;
     if(i%12===0){ ctx.beginPath(); ctx.arc(x, y, 2.2, 0, Math.PI*2); ctx.fill(); }
@@ -1580,7 +1884,7 @@ function draw(){
     ctx.translate((Math.random()-0.5)*m, (Math.random()-0.5)*m);
   } else shakeMag = 0;
 
-  ctx.drawImage(bgCv, 0, 0);
+  ctx.drawImage(bgCv, 0, 0, W, H);
   drawHoops();
   drawTrajectoryPreview();
 
@@ -1660,17 +1964,20 @@ function updateHUD(){
     lastStreakTxt = st;
   }
   Music.setDuck(state === 'play' && (clock <= 5 || timeScale < 0.9) ? 0.35 : 1);
+  $('fingerHint').classList.toggle('show', state === 'play' && firstVisit && attempts === 0);
 }
 
 /* ── input ─────────────────────────────────────────────── */
 function press(src){
   AudioFX.init(); AudioFX.resume(); Music.start();
   if(state === 'title'){
-    if(src === 'key') startGame('classic');   // SPACE = quick classic run; clicks use the buttons
+    // first-ever visit: any touch starts the game — no reading required
+    if(src === 'key' || firstVisit) startGame('classic');
     return;
   }
   if(state === 'pause'){ state = prevPauseState; $('pauseOverlay').classList.add('hidden'); return; }
   if(state === 'over'){
+    // whole-stage taps wait out the overlay fade; R / RUN IT BACK stay at 250ms
     if(performance.now() - overAt > 700) startGame();
     return;
   }
@@ -1709,7 +2016,7 @@ window.addEventListener('keydown', e => {
   } else if(e.code === 'KeyP'){
     if(!e.repeat) togglePause();
   } else if(e.code === 'KeyR' && state === 'over'){
-    if(performance.now() - overAt > 700) startGame();
+    if(performance.now() - overAt > 250) startGame();
   }
 });
 window.addEventListener('keyup', e => { if(e.code === 'Space') release('key'); });
@@ -1721,12 +2028,14 @@ $('muteBtn').addEventListener('pointerdown', e => {
 });
 $('againBtn').addEventListener('pointerdown', e => e.stopPropagation());
 $('againBtn').addEventListener('click', () => {
-  if(state === 'over' && performance.now() - overAt > 700) startGame();
+  if(state === 'over' && performance.now() - overAt > 250) startGame();
 });
 
 function refreshDailySub(){
   syncBestDaily();
-  $('dailySub').textContent = dailyLabel() + (bestDaily > 0 ? ' · best ' + bestDaily : '');
+  $('dailySub').textContent = dailyLabel()
+    + (bestDaily > 0 ? ' · best ' + bestDaily : '')
+    + (dailyStreak.count > 1 && dailyStreak.last === dailyKey() ? ' · 🔥' + dailyStreak.count : '');
 }
 function goTitle(){
   state = 'title';
@@ -1734,10 +2043,12 @@ function goTitle(){
   stage.classList.remove('playing');
   $('overOverlay').classList.add('hidden');
   $('titleOverlay').classList.remove('hidden');
+  $('firstCta').style.display = firstVisit ? 'block' : 'none';
   $('bestLabel').textContent = 'BEST';
   bestEl.textContent = best;
   refreshDailySub();
   renderBadgeWall();
+  renderMissions();
   AudioFX.crowdBase(0.02);
 }
 function doShare(){
@@ -1775,17 +2086,31 @@ $('musicBtn').addEventListener('click', e => {
 
 /* save backup — itch's shared iframe origin has a history of localStorage
    wipes, so players get a copy-paste escape hatch */
-const SAVE_KEYS_FIXED = ['buzzerBeaterHigh','bbBadges','bbSkin','bbMusic'];
+const SAVE_KEYS_FIXED = ['buzzerBeaterHigh','bbBadges','bbSkin','bbMusic','bbStreak','bbStars','bbPlayed'];
+const SAVE_PREFIXES = ['bbDaily-','bbMissions-'];
+function pruneOldDays(){
+  // per-day keys older than a week serve no purpose — keep storage lean
+  try{
+    const cutoff = dayKeyOffset(-7), dead = [];
+    for(let i=0;i<localStorage.length;i++){
+      const k = localStorage.key(i);
+      if(!k) continue;
+      for(const p of SAVE_PREFIXES){
+        if(k.indexOf(p) === 0 && k.slice(p.length) < cutoff) dead.push(k);
+      }
+    }
+    dead.forEach(k => localStorage.removeItem(k));
+  }catch(e){}
+}
+function isSaveKey(k){
+  return SAVE_KEYS_FIXED.indexOf(k) >= 0 || SAVE_PREFIXES.some(p => k.indexOf(p) === 0);
+}
 function exportSave(){
   const data = { v: 1 };
   try{
-    for(const k of SAVE_KEYS_FIXED){
-      const val = localStorage.getItem(k);
-      if(val !== null) data[k] = val;
-    }
     for(let i=0;i<localStorage.length;i++){
       const k = localStorage.key(i);
-      if(k && k.indexOf('bbDaily-') === 0) data[k] = localStorage.getItem(k);
+      if(k && isSaveKey(k)) data[k] = localStorage.getItem(k);
     }
   }catch(e){}
   return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
@@ -1796,9 +2121,7 @@ function importSave(code){
   if(!data || data.v !== 1) return false;
   try{
     for(const k of Object.keys(data)){
-      if(k === 'v') continue;
-      if(SAVE_KEYS_FIXED.indexOf(k) >= 0 || k.indexOf('bbDaily-') === 0)
-        localStorage.setItem(k, String(data[k]));
+      if(k !== 'v' && isSaveKey(k)) localStorage.setItem(k, String(data[k]));
     }
   }catch(e){ return false; }
   return true;
@@ -1850,6 +2173,7 @@ $('copySaveBtn').addEventListener('click', e => {
 $('importSaveBtn').addEventListener('click', e => {
   e.stopPropagation();
   if(importSave($('saveBox').value)){
+    pruneOldDays();
     addToast('✅ SAVE RESTORED', 'reloading…');
     setTimeout(() => location.reload(), 900);
   } else {
@@ -1873,14 +2197,22 @@ function togglePause(){
 }
 document.addEventListener('visibilitychange', () => {
   if(document.hidden && state === 'play') togglePause();
+  // iOS can re-suspend the context after lock screen / calls — wake it
+  else if(!document.hidden) AudioFX.resume();
 });
 window.addEventListener('blur', () => { if(state === 'play') togglePause(); });
 
 /* ── main loop ─────────────────────────────────────────── */
 /* boot */
+pruneOldDays();
+applyLayout(pickLayoutMode());
+hoop.x = hoop.tx = L.firstHoop[0]; hoop.ry = hoop.try = L.firstHoop[1];
+newBall();
 renderBadgeWall();
+renderMissions();
 refreshDailySub();
 $('musicBtn').classList.toggle('off', !Music.enabled);
+$('firstCta').style.display = firstVisit ? 'block' : 'none';
 if('serviceWorker' in navigator && location.protocol === 'https:'){
   navigator.serviceWorker.register('./sw.js').catch(()=>{});
 }
