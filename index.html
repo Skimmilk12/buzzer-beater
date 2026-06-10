@@ -261,6 +261,13 @@
   }
   #musicBtn.off{ opacity:.4; }
 
+  #fsBtn{
+    position:absolute; top:1.6cqh; right:calc(1.2cqw + 16.8cqh); z-index:45;
+    width:4.6cqh; height:4.6cqh; border-radius:50%;
+    background:#1d1038cc; border:1px solid #ff8c4244; color:var(--cream);
+    font-size:2.2cqh; line-height:1; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+  }
   #saveBtn{
     position:absolute; top:1.6cqh; right:calc(1.2cqw + 11.2cqh); z-index:45;
     width:4.6cqh; height:4.6cqh; border-radius:50%;
@@ -312,6 +319,7 @@
   <button id="muteBtn" title="mute (M)">🔊</button>
   <button id="musicBtn" title="music (N)">🎵</button>
   <button id="saveBtn" title="backup save data">💾</button>
+  <button id="fsBtn" title="fullscreen (F)">⛶</button>
 
   <div class="overlay hidden" id="saveOverlay">
     <div class="pauseTxt">SAVE DATA</div>
@@ -326,7 +334,7 @@
       <button id="closeSaveBtn">CLOSE</button>
     </div>
   </div>
-  <div id="hint">HOLD to charge · RELEASE to shoot · catch the teal band for a SWISH · P pause · M mute · N music</div>
+  <div id="hint">HOLD to charge · RELEASE to shoot · catch the teal band for a SWISH · P pause · M mute · N music · F fullscreen</div>
 
   <div class="overlay" id="titleOverlay">
     <div class="logo"><span class="l1">BUZZER</span><span class="l2">BEATER</span></div>
@@ -1696,6 +1704,8 @@ window.addEventListener('keydown', e => {
     if(!e.repeat) $('muteBtn').textContent = AudioFX.toggleMute() ? '🔇' : '🔊';
   } else if(e.code === 'KeyN'){
     if(!e.repeat) Music.setEnabled(!Music.enabled);
+  } else if(e.code === 'KeyF'){
+    if(!e.repeat) toggleFullscreen();
   } else if(e.code === 'KeyP'){
     if(!e.repeat) togglePause();
   } else if(e.code === 'KeyR' && state === 'over'){
@@ -1793,6 +1803,25 @@ function importSave(code){
   }catch(e){ return false; }
   return true;
 }
+/* in-game fullscreen keeps keyboard focus inside the game — the itch page's
+   own fullscreen button moves focus to the parent and kills key input */
+function toggleFullscreen(){
+  const de = document.documentElement;
+  if(document.fullscreenElement || document.webkitFullscreenElement){
+    (document.exitFullscreen || document.webkitExitFullscreen || function(){}).call(document);
+  } else if(de.requestFullscreen){
+    de.requestFullscreen().catch(()=>{});
+  } else if(de.webkitRequestFullscreen){
+    de.webkitRequestFullscreen();
+  }
+  window.focus();
+}
+if(!document.documentElement.requestFullscreen && !document.documentElement.webkitRequestFullscreen){
+  $('fsBtn').style.display = 'none';   // iPhones: no element fullscreen API
+}
+$('fsBtn').addEventListener('pointerdown', e => e.stopPropagation());
+$('fsBtn').addEventListener('click', e => { e.stopPropagation(); toggleFullscreen(); });
+
 $('saveOverlay').addEventListener('pointerdown', e => e.stopPropagation());
 $('saveBtn').addEventListener('pointerdown', e => e.stopPropagation());
 $('saveBtn').addEventListener('click', e => {
