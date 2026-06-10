@@ -1677,7 +1677,13 @@ function release(src){
   else { charging = false; AudioFX.chargeStop(); }
 }
 
-stage.addEventListener('pointerdown', e => { e.preventDefault(); press('pointer'); });
+stage.addEventListener('pointerdown', e => {
+  e.preventDefault();
+  // preventDefault blocks click-to-focus, which kills keyboard input when the
+  // game runs inside an iframe (itch.io) — take focus back explicitly
+  window.focus();
+  press('pointer');
+});
 window.addEventListener('pointerup',   () => release('pointer'));
 window.addEventListener('pointercancel', () => { charging = false; chargeSrc = null; chargeP = 0; AudioFX.chargeStop(); });
 window.addEventListener('contextmenu', e => e.preventDefault());
