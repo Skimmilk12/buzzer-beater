@@ -2841,6 +2841,8 @@ window.addEventListener('keydown', e => {
     if(!e.repeat) Music.setEnabled(!Music.enabled);
   } else if(e.code === 'KeyF'){
     if(!e.repeat) toggleFullscreen();
+  } else if(e.code === 'KeyG' && state === 'title'){
+    if(!e.repeat) startGodDemo();   // localhost-only inside; no-op in production
   } else if(e.code === 'KeyP'){
     if(!e.repeat) togglePause();
   } else if(e.code === 'KeyR' && state === 'over'){
@@ -3072,6 +3074,28 @@ renderMissions();
 refreshDailySub();
 $('musicBtn').classList.toggle('off', !Music.enabled);
 applyTitleVariant();
+
+/* dev-only GOD MODE showcase — G on the title screen, localhost only */
+function startGodDemo(){
+  if(location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') return;
+  togglePause = () => {};
+  startGame('classic');
+  streak = 10; applyFireClass();
+  nightMode = true; paintBackdrop();
+  score = 188; clock = 30;
+  flashT = 0.12; flashDur = 0.12; flashPeak = 0.4;
+  Music.setIntensity(4);
+  if(window.__godDemo) clearInterval(window.__godDemo);
+  window.__godDemo = setInterval(() => {
+    if(state !== 'play') return;
+    clock = 30;
+    if(ball && ball.held && !charging){
+      chargeP = clamp(perfectP(hoop2 || hoop), 0, 1);
+      charging = true; chargeSrc = 'key';
+      shoot();
+    }
+  }, 1700);
+}
 if('serviceWorker' in navigator && location.protocol === 'https:'){
   navigator.serviceWorker.register('./sw.js').catch(()=>{});
 }
