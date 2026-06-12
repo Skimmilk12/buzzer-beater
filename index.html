@@ -902,8 +902,47 @@ function syncBestDaily(){
   }
 }
 
-/* the live home of the game — every share card carries this link */
+/* the live home of the game — every share card carries this link.
+   Portal builds (CrazyGames/Poki) blank this out: portals forbid external links. */
 const SHARE_URL = 'https://skimmilk12.github.io/buzzer-beater/';
+
+/* Portal adapter: every method is a safe no-op unless a portal SDK is present.
+   The portal build variant injects the SDK script tag; this facade activates
+   itself only when it finds one. Pages/itch/local builds are untouched. */
+const Portal = {
+  active: false, sdk: null, lastAdAt: 0, runsSinceAd: 0,
+  async init(){
+    if(!(window.CrazyGames && window.CrazyGames.SDK)) return;
+    try{
+      await window.CrazyGames.SDK.init();
+      this.sdk = window.CrazyGames.SDK;
+      this.active = true;
+      try{ this.sdk.game.loadingStop(); }catch(e){}
+    }catch(e){ this.active = false; }
+  },
+  gameplayStart(){ if(this.active) try{ this.sdk.game.gameplayStart(); }catch(e){} },
+  gameplayStop(){ if(this.active) try{ this.sdk.game.gameplayStop(); }catch(e){} },
+  happy(){ if(this.active) try{ this.sdk.game.happytime(); }catch(e){} },
+  // interstitial between runs: never before run 3, never more than once per 2 minutes
+  maybeMidgame(){
+    if(!this.active) return;
+    this.runsSinceAd++;
+    if(this.runsSinceAd < 3 || performance.now() - this.lastAdAt < 120000) return;
+    const wasMuted = AudioFX.muted;
+    const hush = on => {
+      if(!AudioFX.ctx || wasMuted) return;
+      if(on){ AudioFX.master.gain.value = 0; AudioFX.ctx.suspend(); }
+      else { AudioFX.master.gain.value = 0.8; AudioFX.ctx.resume(); }
+    };
+    try{
+      this.sdk.ad.requestAd('midgame', {
+        adStarted: () => hush(true),
+        adFinished: () => { this.lastAdAt = performance.now(); this.runsSinceAd = 0; hush(false); },
+        adError: () => { this.lastAdAt = performance.now(); hush(false); },
+      });
+    }catch(e){ hush(false); }
+  }
+};
 
 /* quarters & modifiers — every modifier preserves the band promise:
    a release inside the band is ALWAYS a swish */
@@ -1255,6 +1294,7 @@ function startGame(m){
   $('qBanner').classList.remove('show');
   stage.classList.add('playing');
   if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
+  Portal.gameplayStart();
   AudioFX.crowdBase(0.045);
 }
 
@@ -1284,6 +1324,8 @@ function shareText(){
 function endGame(){
   state = 'over';
   overAt = performance.now();
+  Portal.gameplayStop();
+  Portal.maybeMidgame();
   window.dispatchEvent(new Event('resize'));   // settle any mid-run orientation change now
   charging = false;
   AudioFX.chargeStop();
@@ -1399,6 +1441,7 @@ function resolveShot(made, swish, bank, tg){
       wasBB = true; bbCount++;
       pts *= 3; tBonus = 12;
       freezeT = 0.14;
+      Portal.happy();   // the portal's celebration hook, reserved for the signature moment
       popup('BUZZER BEATER!', W/2, H*0.37, '#ff2e63', 52);
       popup('OVERTIME +12s', W/2, H*0.37+52, '#2de2e6', 26);
       spawnParts(60, hx, hy, { colors:['#ffb000','#ff2e63','#2de2e6','#ffe9d6','#ff8c42'],
@@ -1975,7 +2018,12 @@ function press(src){
     if(src === 'key' || firstVisit) startGame('classic');
     return;
   }
-  if(state === 'pause'){ state = prevPauseState; $('pauseOverlay').classList.add('hidden'); return; }
+  if(state === 'pause'){
+    state = prevPauseState;
+    Portal.gameplayStart();
+    $('pauseOverlay').classList.add('hidden');
+    return;
+  }
   if(state === 'over'){
     // whole-stage taps wait out the overlay fade; R / RUN IT BACK stay at 250ms
     if(performance.now() - overAt > 700) startGame();
@@ -2188,10 +2236,12 @@ function togglePause(){
     charging = false; chargeSrc = null; chargeP = 0;
     AudioFX.chargeStop();
     if(AudioFX.ctx) AudioFX.ctx.suspend();
+    Portal.gameplayStop();
     $('pauseOverlay').classList.remove('hidden');
   } else if(state === 'pause'){
     state = prevPauseState;
     AudioFX.resume();
+    Portal.gameplayStart();
     $('pauseOverlay').classList.add('hidden');
   }
 }
@@ -2204,6 +2254,7 @@ window.addEventListener('blur', () => { if(state === 'play') togglePause(); });
 
 /* ── main loop ─────────────────────────────────────────── */
 /* boot */
+Portal.init();
 pruneOldDays();
 applyLayout(pickLayoutMode());
 hoop.x = hoop.tx = L.firstHoop[0]; hoop.ry = hoop.try = L.firstHoop[1];
